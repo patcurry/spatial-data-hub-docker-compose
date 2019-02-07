@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  web:
+    build: ../spatialdatahub.org
+    #command: python /usr/src/spatialdatahub.org/manage.py runserver 0.0.0.0:8000 --settings=main.settings.dev
+    command: gunicorn main.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ../spatialdatahub.org/:/usr/src/spatialdatahub.org/
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY=secret
+      - CRYPTO_KEY="HsxAfguf_gRBGNx6C5LFv4LikkrhZZsK_zOhuP2-qsc="
+      - SQL_ENGINE=django.db.backends.postgresql
+      - SQL_DATABASE=postgres
+      - SQL_USER=postgres
+      - SQL_PASSWORD=postgres
+      - SQL_HOST=db
+      - SQL_PORT=5432
+      - DATABASE=postgres
+      - DJANGO_SETTINGS_MODULE=main.settings.dev
+    depends_on:
+      - db
+
+  db:
+    image: postgres:11
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+        #  nginx:
+        #    build: ../spatialdatahub-nginx
+        #    volumes:
+        #      - static_volume:/usr/src/spatialdatahub.org-static/
+        #    ports:
+        #      - 1337:80
+        #    depends_on:
+        #      - web
+
+        #volumes:
+        #  postgres_data:
+        #  static_volume:
