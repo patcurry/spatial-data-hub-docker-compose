@@ -1,0 +1,52 @@
+{
+  "name": "spatialdatahub.org-static",
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
+  "version": "1.0.0",
+  "description": "static files for spatialdatahub.org",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify src/bundle.js -t babelify -o build/js/bundle.js -t",
+    "dev": "watchify src/bundle.js -t babelify -o build/js/bundle.js -t",
+    "dev-filter": "watchify src/embed-filter.js -t babelify -o build/js/embed-filter.js -t",
+    "test": "jest",
+    "test-watch": "jest --verbose --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spatialdatahub/spatialdatahub.org-static.git"
+  },
+  "keywords": [
+    "leaflet"
+  ],
+  "author": "Pat Curry",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/spatialdatahub/spatialdatahub.org-static/issues"
+  },
+  "homepage": "https://github.com/spatialdatahub/spatialdatahub.org-static#readme",
+  "devDependencies": {
+    "atob": ">=2.1.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^23.0.0-alpha.0",
+    "babel-preset-env": "^1.6.1",
+    "babelify": "^8.0.0",
+    "browserify": "^16.1.1",
+    "jest": "^22.4.2",
+    "randomatic": ">=3.0.0",
+    "regenerator-runtime": "^0.11.1",
+    "static-eval": ">=2.0.0",
+    "watchify": "^3.11.0"
+  },
+  "dependencies": {
+    "@mapbox/leaflet-omnivore": "^0.3.4",
+    "@turf/helpers": "^6.0.1",
+    "@turf/within": "^4.7.3",
+    "easy-nominatim": "^1.0.4",
+    "file-saver": "^1.3.4",
+    "leaflet": "^1.3.1",
+    "leaflet.markercluster": "^1.3.0"
+  }
+}

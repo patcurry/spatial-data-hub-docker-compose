@@ -3,11 +3,12 @@ version: '3.7'
 services:
 
   web:
-    build: ../spatialdatahub.org
+    build: ./spatialdatahub.org
     #command: python /usr/src/spatialdatahub.org/manage.py runserver 0.0.0.0:8000 --settings=main.settings.dev
     command: gunicorn main.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ../spatialdatahub.org/:/usr/src/spatialdatahub.org/
+      - ./spatialdatahub.org/:/usr/src/spatialdatahub.org/
+      - ./spatialdatahub.org-static/build/:/usr/src/spatialdatahub.org-static/
     #ports:
     #  - 8000:8000
     expose:
@@ -33,6 +34,8 @@ services:
 
   nginx:
     build: ./nginx
+    volumes:
+      - static_volume:/usr/src/spatialdatahub.org-static/
     ports:
       - 1337:80
     depends_on:
@@ -48,4 +51,4 @@ services:
 
 volumes:
   postgres_data:
-        #  static_volume:
+  static_volume:

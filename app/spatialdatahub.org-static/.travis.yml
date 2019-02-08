@@ -1,0 +1,27 @@
+# spatialdatahub.org-static/.travis.yml
+
+language: node_js
+
+node_js:
+  - "8"
+
+install:
+  - "npm install"
+
+script:
+  - "npm run test"
+  - "npm run build"
+
+before_deploy: "echo 'How do I deploy only the correct files?'"
+
+deploy:
+  provider: s3
+  access_key_id: $ACCESSKEYID 
+  secret_access_key:
+    secure: "$SECRETACCESSKEY" 
+  bucket: "spatialdatahub-static"
+  skip_cleanup: true
+  region: "eu-central-1"
+  local_dir: build
+  on:
+    branch: master
