@@ -1,0 +1,3 @@
+[submodule "spatialdatahub.org"]
+	path = spatialdatahub.org
+	url = https://github.com/patcurry/spatialdatahub.org.git
