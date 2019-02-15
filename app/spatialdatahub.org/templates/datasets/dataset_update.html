@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Update {{ dataset.title }}{% endblock title %}
+
+{% block breadcrumbs %}
+  / <a href="{{ account.get_absolute_url }}">{{ account.user }}</a>
+  / <a href="{{ dataset.get_absolute_url }}">{{ dataset.title }}</a>
+  / <a href="{% url 'datasets:dataset_update' account.account_slug dataset.dataset_slug %}">update</a>
+{% endblock breadcrumbs %}
+
+{% block content %}
+
+  <p>
+    <form id="update_dataset_form" action="." method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input class="btn btn-default" type="submit" value="Update {{ dataset.title }}">
+    </form>
+  </p>
+
+  <p>
+    <a href="{% url 'datasets:dataset_update_auth' account.account_slug dataset.dataset_slug %}">
+      Update {{ dataset.title }} authentication details
+    </a>
+  </p>
+
+  <p>
+    <a href="{{ dataset.get_absolute_url }}">
+      No, take me back to {{ dataset.title }}'s page
+    </a>
+  </p>
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}New Keyword{% endblock title %}
+
+{% block breadcrumbs %}
+/ <a href="{{ account.get_absolute_url }}">{{ account.user }}</a>
+/ <a href="{{ dataset.get_absolute_url }}">{{ dataset.title }}</a>
+/ <a href="{% url 'datasets:add_keyword_to_dataset' account.account_slug dataset.dataset_slug %}">add keyword</a>
+{% endblock breadcrumbs %}
+
+{% block content %}
+<div class="container">
+  <h2>Add a keyword to {{ dataset.title }}</h2>
+  <hr>
+  <p>
+    <form action="." method="POST">
+      {% csrf_token %}
+      <input type="text" placeholder="The new keyword goes here" name="kw">
+    </form>
+  </p>
+</div>
+{% endblock content %}
