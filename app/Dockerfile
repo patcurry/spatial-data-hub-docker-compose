@@ -1,5 +1,21 @@
+# named static for easy reference
+FROM node:10-stretch as static
+
+WORKDIR /usr/src/app/static
+
+COPY ./spatialdatahub.org-static/package*.json /usr/src/app/static/
+COPY ./spatialdatahub.org-static/.babelrc /usr/src/app/static/.babelrc
+COPY ./spatialdatahub.org-static/src/ /usr/src/app/static/src/
+
+
+RUN npm install
+RUN npm run build
+
+ADD ./spatialdatahub.org-static/build/ /usr/src/app/static/build/
+
 # pull official python base image
-FROM python:3.7-stretch
+# named final because final stage
+FROM python:3.7-stretch as final
 
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
