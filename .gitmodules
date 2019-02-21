@@ -1,6 +1,6 @@
 [submodule "spatialdatahub.org"]
-	path = app/spatialdatahub.org
+	path = ./app/spatialdatahub.org
 	url = https://github.com/spatialdatahub/spatialdatahub.org.git
 [submodule "spatialdatahub.org-static"]
-	path = app/spatialdatahub.org-static
+	path = ./app/spatialdatahub.org-static
     url = https://github.com/spatialdatahub/spatialdatahub.org-static.git
