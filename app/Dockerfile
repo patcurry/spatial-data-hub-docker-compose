@@ -9,7 +9,8 @@ COPY ./spatialdatahub.org-static/src/ /usr/src/app/static/src/
 
 
 RUN npm install
-RUN npm run build
+#RUN npm run build
+RUN ./build-files.sh
 
 ADD ./spatialdatahub.org-static/build/ /usr/src/app/static/build/
 
