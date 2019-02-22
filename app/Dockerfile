@@ -21,9 +21,9 @@ RUN mkdir /usr/src/app/static/
 # |
 # |__spatialdatahub.org-static     - ideally this whole directory wouldn't be in the container
 # |  |                             - but I don't know how to do it otherwise
-# |  |__package.json     
-# |  |__package-lock.json     
-# |  |__.bablerc
+# |  |__package.json               - this is no longer an issue 
+# |  |__package-lock.json          - the problem is handled below with the copy from static 
+# |  |__.bablerc                   - container command
 # |  |__src
 # |
 # |__static
@@ -50,21 +50,8 @@ COPY ./spatialdatahub.org-static/src/ /usr/src/app/spatialdatahub.org-static/src
 # copy the css, images and django admin stuff to the static dir in the container
 COPY ./spatialdatahub.org-static/build/ /usr/src/app/static/
 
-RUN ls ../static
-
 # build the javascript file and move the files to the static directory
-# a
-#RUN npm run build
 RUN npm run build-and-move-files
-
-RUN ls ../static
-RUN ls ../static/js
-
-# something is happening to the static file in the python section
-# it is getting overwritten
-
-# it seems like the directories are not persisting
-# between containers
 
 # pull official python base image
 # named final because final stage
@@ -74,11 +61,8 @@ FROM python:3.7-stretch as final
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+# very imporant step, copy work from before to final container
 COPY --from=static /usr/src/app/static/ /usr/src/app/static/
-
-# this returned the message 
-# ls: cannot access '/usr/src/app/': No such file or directory
-RUN ls /usr/src/app/
 
 # set work directory
 WORKDIR /usr/src/app/spatialdatahub.org
@@ -95,13 +79,8 @@ RUN pip install -r /usr/src/app/spatialdatahub.org/requirements.txt
 # copy entrypoint.sh
 COPY ./spatialdatahub.org/entrypoint.sh /usr/src/app/spatialdatahub.org/entrypoint.sh
 
-# copy project
-# this is the problem
+# copy django part of project
 COPY ./spatialdatahub.org /usr/src/app/spatialdatahub.org
-RUN pwd
-RUN ls ..
-RUN ls ../static/
-RUN ls ../spatialdatahub.org-static/
 
 # run entrypoint.sh
 ENTRYPOINT ["/usr/src/app/spatialdatahub.org/entrypoint.sh"]
