@@ -38,4 +38,4 @@ if "RDS_HOSTNAME" in os.environ:
     }
 
 
-STATIC_URL = "https://s3.eu-central-1.amazonaws.com/spatialdatahub-static/"
+#STATIC_URL = "https://s3.eu-central-1.amazonaws.com/spatialdatahub-static/"
